@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Domain.Exceptions
 {
-    public enum DocumentTypes
+    public class InvalidEmailException : Exception
     {
-        Passport = 1,
-        DriverLicense = 2
     }
 }
