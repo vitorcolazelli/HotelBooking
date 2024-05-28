@@ -18,6 +18,12 @@ namespace Domain.Entities
         public string Email { get; set; }
         public PersonId DocumentId { get; set; }
 
+        public bool IsValid()
+        {
+            this.ValidateState();
+            return true;
+        }
+
         private void ValidateState()
         {
             if (DocumentId == null || 

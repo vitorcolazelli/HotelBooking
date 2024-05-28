@@ -10,7 +10,7 @@ namespace DomainTests.Bookings
         public void ShouldAlwaysStartWithCreatedStatus()
         {
             var booking = new Booking();
-            Assert.Equal(Status.Created, booking.CurrentStatus);
+            Assert.Equal(Status.Created, booking.Status);
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace DomainTests.Bookings
 
             booking.ChangeState(Action.Pay);
 
-            Assert.Equal(Status.Paid, booking.CurrentStatus);
+            Assert.Equal(Status.Paid, booking.Status);
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace DomainTests.Bookings
 
             booking.ChangeState(Action.Cancel);
 
-            Assert.Equal(Status.Canceled, booking.CurrentStatus);
+            Assert.Equal(Status.Canceled, booking.Status);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace DomainTests.Bookings
             booking.ChangeState(Action.Pay);
             booking.ChangeState(Action.Finish);
 
-            Assert.Equal(Status.Finished, booking.CurrentStatus);
+            Assert.Equal(Status.Finished, booking.Status);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace DomainTests.Bookings
             booking.ChangeState(Action.Pay);
             booking.ChangeState(Action.Refound);
 
-            Assert.Equal(Status.Refunded, booking.CurrentStatus);
+            Assert.Equal(Status.Refunded, booking.Status);
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace DomainTests.Bookings
             booking.ChangeState(Action.Cancel);
             booking.ChangeState(Action.Reopen);
 
-            Assert.Equal(Status.Created, booking.CurrentStatus);
+            Assert.Equal(Status.Created, booking.Status);
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace DomainTests.Bookings
 
             booking.ChangeState(Action.Refound);
 
-            Assert.Equal(Status.Created, booking.CurrentStatus);
+            Assert.Equal(Status.Created, booking.Status);
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace DomainTests.Bookings
             booking.ChangeState(Action.Finish);
             booking.ChangeState(Action.Refound);
 
-            Assert.Equal(Status.Finished, booking.CurrentStatus);
+            Assert.Equal(Status.Finished, booking.Status);
         }
     }
 }
