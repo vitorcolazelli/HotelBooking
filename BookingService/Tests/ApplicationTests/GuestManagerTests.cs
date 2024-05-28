@@ -149,5 +149,56 @@ namespace ApplicationTests
             Assert.Equal(ErrorCodes.INVALID_EMAIL, res.ErrorCode);
             Assert.Equal("The given email is not valid", res.Message);
         }
+
+        [Fact]
+        public async Task Should_Return_GuestNotFound_When_GuestDoesntExist()
+        {
+            var fakeRepo = new Mock<IGuestRepository>();
+
+            var fakeGuest = new Guest
+            {
+                Id = 333,
+                Name = "Test"
+            };
+
+            fakeRepo.Setup(x => x.Get(333)).Returns(Task.FromResult<Guest?>(null));
+
+            _guestManager = new GuestManager(fakeRepo.Object);
+
+            var res = await _guestManager.GetGuest(333);
+
+            Assert.NotNull(res);
+            Assert.False(res.Success);
+            Assert.Equal(ErrorCodes.GUEST_NOT_FOUND, res.ErrorCode);
+            Assert.Equal("No Guest record was found with the given Id", res.Message);
+        }
+
+        [Fact]
+        public async Task Should_Return_Guest_Success()
+        {
+            var fakeRepo = new Mock<IGuestRepository>();
+
+            var fakeGuest = new Guest
+            {
+                Id = 333,
+                Name = "Test",
+                DocumentId = new Domain.ValueObjects.PersonId
+                {
+                    DocumentType = Domain.Enums.DocumentTypes.DriverLicense,
+                    IdNumber = "1234"
+                }
+            };
+
+            fakeRepo.Setup(x => x.Get(333)).Returns(Task.FromResult((Guest?)fakeGuest));
+
+            _guestManager = new GuestManager(fakeRepo.Object);
+
+            var res = await _guestManager.GetGuest(333);
+
+            Assert.NotNull(res);
+            Assert.True(res.Success);
+            Assert.Equal(fakeGuest.Id, res.Data.Id);
+            Assert.Equal(fakeGuest.Name, res.Data.Name);
+        }
     }
 }
