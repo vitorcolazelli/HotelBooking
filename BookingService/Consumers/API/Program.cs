@@ -1,7 +1,10 @@
 using Application.Guest;
 using Application.Guest.Ports;
+using Application.Room;
+using Application.Room.Ports;
 using Data;
 using Data.Guest;
+using Data.Room;
 using Domain.Ports;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +16,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IGuestManager, GuestManager>();
 builder.Services.AddScoped<IGuestRepository, GuestRepository>();
+
+builder.Services.AddScoped<IRoomManager, RoomManager>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 
 var connectionString = builder.Configuration.GetConnectionString("Main");
 builder.Services.AddDbContext<HotelDbContext>(options => options.UseSqlServer(connectionString));
