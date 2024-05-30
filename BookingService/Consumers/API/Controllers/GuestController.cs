@@ -8,12 +8,14 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GuestController : ControllerBase
+    public class GuestsController : ControllerBase
     {
-        private readonly ILogger<GuestController> _logger;
+        private readonly ILogger<GuestsController> _logger;
         private readonly IGuestManager _guestManager;
 
-        public GuestController(ILogger<GuestController> logger, IGuestManager guestManager)
+        public GuestsController(
+            ILogger<GuestsController> logger,
+            IGuestManager guestManager)
         {
             _logger = logger;
             _guestManager = guestManager;
@@ -52,7 +54,7 @@ namespace API.Controllers
                 return BadRequest(res);
             }
 
-            _logger.LogError("Response with unknown errorCode returned", res);
+            _logger.LogError("Response with unknown ErrorCode Returned", res);
             return BadRequest(500);
         }
 

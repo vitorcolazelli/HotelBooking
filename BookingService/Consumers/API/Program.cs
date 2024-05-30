@@ -2,6 +2,7 @@ using Application.Booking;
 using Application.Booking.Ports;
 using Application.Guest;
 using Application.Guest.Ports;
+using Application.Payment.Ports;
 using Application.Room;
 using Application.Room.Ports;
 using Data;
@@ -10,21 +11,23 @@ using Data.Guest;
 using Data.Room;
 using Domain.Ports;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
+using PaymentApplication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddMediatR(typeof(BookingManager));
 
 builder.Services.AddScoped<IGuestManager, GuestManager>();
 builder.Services.AddScoped<IGuestRepository, GuestRepository>();
-
 builder.Services.AddScoped<IRoomManager, RoomManager>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
-
 builder.Services.AddScoped<IBookingManager, BookingManager>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IPaymentProcessorFactory, PaymentProcessorFactory>();
 
 var connectionString = builder.Configuration.GetConnectionString("Main");
 builder.Services.AddDbContext<HotelDbContext>(options => options.UseSqlServer(connectionString));
