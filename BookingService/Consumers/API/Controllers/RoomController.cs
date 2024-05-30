@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Application.Room.DTO;
 using Application.Room.Ports;
 using MediatR;
+using Application.Room.Commands;
+using Application.Room.Queries;
 
 namespace API.Controllers
 {
